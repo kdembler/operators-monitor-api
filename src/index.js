@@ -2,6 +2,7 @@ const express = require("express");
 const Sequelize = require("sequelize");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const operators_metrics = require("../models/operators_metrics");
 
 dotenv.config();
 
@@ -21,46 +22,7 @@ const port = 3000;
 app.use(express.json());
 app.use(morgan("combined"));
 
-const OpeartorsMetrics = sequelize.define(
-  "operators_metrics",
-  {
-    dataObjectId: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    distributionBucketId: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    workerId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    nodeEndpoint: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    url: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    status: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    responseTime: {
-      type: Sequelize.FLOAT,
-    },
-    statusCode: {
-      type: Sequelize.INTEGER,
-    },
-    time: {
-      type: Sequelize.DATE,
-      primaryKey: true,
-    },
-  },
-  { timestamps: false }
-);
+const OpeartorsMetrics = operators_metrics(sequelize, Sequelize);
 
 sequelize
   .authenticate()
@@ -82,6 +44,8 @@ app.post("/metrics", async (req, res) => {
   const invalidMetrics = metrics.filter(
     (metric) =>
       !metric.dataObjectId ||
+      !metric.dataObjectType ||
+      !metric.region ||
       !metric.distributionBucketId ||
       !metric.workerId ||
       !metric.nodeEndpoint ||

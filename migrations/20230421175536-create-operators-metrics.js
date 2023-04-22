@@ -13,6 +13,14 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        dataObjectType: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        region: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
         distributionBucketId: {
           type: Sequelize.STRING,
           allowNull: false,

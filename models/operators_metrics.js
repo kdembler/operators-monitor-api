@@ -14,18 +14,28 @@ module.exports = (sequelize, DataTypes) => {
   operators_metrics.init(
     {
       dataObjectId: DataTypes.STRING,
+      dataObjectType: DataTypes.STRING,
+      region: DataTypes.STRING,
       distributionBucketId: DataTypes.STRING,
       workerId: DataTypes.INTEGER,
       nodeEndpoint: DataTypes.STRING,
-      url: DataTypes.STRING,
+      url: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+      },
       status: DataTypes.STRING,
       responseTime: DataTypes.FLOAT,
       statusCode: DataTypes.INTEGER,
-      time: DataTypes.DATE,
+      time: {
+        type: DataTypes.DATE,
+        primaryKey: true,
+      },
     },
     {
       sequelize,
       modelName: "operators_metrics",
+      timestamps: false,
+
       // indexes: [
       //   {
       //     unique: true,
