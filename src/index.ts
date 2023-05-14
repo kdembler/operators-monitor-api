@@ -74,7 +74,7 @@ async function sendResults(results: TestResult[]) {
 const app = express();
 app.use(express.json());
 app.use(morgan("combined"));
-app.post("/", async (req, res) => {
+app.post("/metrics", async (req, res) => {
   const response = await handleResultsRequest(req.body);
   res.status(response.status ?? 200).json(response.body);
 });
